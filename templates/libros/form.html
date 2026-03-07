@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ 'Editar' if libro else 'Nuevo' }} Libro</h2>
+</div>
+
+<form method="POST" class="form">
+    <div class="form-group">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" name="titulo" value="{{ libro.titulo if libro else '' }}" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input type="text" id="isbn" name="isbn" value="{{ libro.isbn if libro else '' }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="anio">Año</label>
+        <input type="number" id="anio" name="anio" value="{{ libro.anio if libro else '' }}" min="1000" max="2100">
+    </div>
+    
+    <div class="form-group">
+        <label for="autor_id">Autor</label>
+        <select id="autor_id" name="autor_id" required>
+            <option value="">Seleccionar autor</option>
+            {% for autor in autores %}
+            <option value="{{ autor.id }}" {{ 'selected' if libro and libro.autor_id == autor.id else '' }}>
+                {{ autor.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="editorial_id">Editorial</label>
+        <select id="editorial_id" name="editorial_id" required>
+            <option value="">Seleccionar editorial</option>
+            {% for editorial in editoriales %}
+            <option value="{{ editorial.id }}" {{ 'selected' if libro and libro.editorial_id == editorial.id else '' }}>
+                {{ editorial.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('libros_list') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

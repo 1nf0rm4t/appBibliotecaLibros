@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Libros</h2>
+    <a href="{{ url_for('libros_new') }}" class="btn btn-primary">➕ Nuevo Libro</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>ISBN</th>
+            <th>Año</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.isbn }}</td>
+            <td>{{ libro.anio }}</td>
+            <td>{{ libro.autor.nombre }}</td>
+            <td>{{ libro.editorial.nombre }}</td>
+            <td class="actions">
+                <a href="{{ url_for('libros_edit', id=libro.id) }}" class="btn btn-sm btn-edit">Editar</a>
+                <a href="{{ url_for('libros_delete', id=libro.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar libro?')">Eliminar</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="empty">No hay libros registrados</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

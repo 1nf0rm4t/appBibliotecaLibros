@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Editoriales</h2>
+    <a href="{{ url_for('editoriales_new') }}" class="btn btn-primary">➕ Nueva Editorial</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Libros</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for editorial in editoriales %}
+        <tr>
+            <td>{{ editorial.id }}</td>
+            <td>{{ editorial.nombre }}</td>
+            <td>{{ editorial.pais }}</td>
+            <td>{{ editorial.libros|length }}</td>
+            <td class="actions">
+                <a href="{{ url_for('editoriales_edit', id=editorial.id) }}" class="btn btn-sm btn-edit">Editar</a>
+                <a href="{{ url_for('editoriales_delete', id=editorial.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar editorial?')">Eliminar</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="empty">No hay editoriales registradas</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
