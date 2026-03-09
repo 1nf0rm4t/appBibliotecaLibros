@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
 
 {% block content %}
 <div class="page-header">
@@ -6,19 +7,52 @@
     <a href="{{ url_for('libros_new') }}" class="btn btn-primary">➕ Nuevo Libro</a>
 </div>
 
+<form method="GET" action="{{ url_for('libros_list') }}" class="search-form">
+    <input type="search" name="q" placeholder="Buscar libros por título, ISBN, autor o editorial..." value="{{ q }}" class="search-input">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    {% if q %}
+        <a href="{{ url_for('libros_list') }}" class="btn btn-secondary">Limpiar</a>
+    {% endif %}
+</form>
+
 <table class="data-table">
     <thead>
         <tr>
-            <th>Título</th>
-            <th>ISBN</th>
-            <th>Año</th>
-            <th>Autor</th>
-            <th>Editorial</th>
+            <th>
+                <a href="{{ url_for('libros_list', sort='titulo', order='desc' if sort == 'titulo' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    Título
+                    {% if sort == 'titulo' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('libros_list', sort='isbn', order='desc' if sort == 'isbn' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    ISBN
+                    {% if sort == 'isbn' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('libros_list', sort='anio', order='desc' if sort == 'anio' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    Año
+                    {% if sort == 'anio' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('libros_list', sort='autor', order='desc' if sort == 'autor' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    Autor
+                    {% if sort == 'autor' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('libros_list', sort='editorial', order='desc' if sort == 'editorial' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    Editorial
+                    {% if sort == 'editorial' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for libro in libros %}
+        {% for libro in libros.items %}
         <tr>
             <td>{{ libro.titulo }}</td>
             <td>{{ libro.isbn }}</td>
@@ -37,4 +71,6 @@
         {% endfor %}
     </tbody>
 </table>
+
+{{ render_pagination(libros, 'libros_list') }}
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
 
 {% block content %}
 <div class="page-header">
@@ -6,18 +7,41 @@
     <a href="{{ url_for('editoriales_new') }}" class="btn btn-primary">➕ Nueva Editorial</a>
 </div>
 
+<form method="GET" action="{{ url_for('editoriales_list') }}" class="search-form">
+    <input type="search" name="q" placeholder="Buscar editoriales por nombre o país..." value="{{ q }}" class="search-input">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    {% if q %}
+        <a href="{{ url_for('editoriales_list') }}" class="btn btn-secondary">Limpiar</a>
+    {% endif %}
+</form>
+
 <table class="data-table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>País</th>
+            <th>
+                <a href="{{ url_for('editoriales_list', sort='id', order='desc' if sort == 'id' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    ID
+                    {% if sort == 'id' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('editoriales_list', sort='nombre', order='desc' if sort == 'nombre' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    Nombre
+                    {% if sort == 'nombre' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="{{ url_for('editoriales_list', sort='pais', order='desc' if sort == 'pais' and order == 'asc' else 'asc', q=q) }}" class="sort-link">
+                    País
+                    {% if sort == 'pais' %}<span class="sort-icon">{{ '▼' if order == 'desc' else '▲' }}</span>{% endif %}
+                </a>
+            </th>
             <th>Libros</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for editorial in editoriales %}
+        {% for editorial in editoriales.items %}
         <tr>
             <td>{{ editorial.id }}</td>
             <td>{{ editorial.nombre }}</td>
@@ -35,4 +59,6 @@
         {% endfor %}
     </tbody>
 </table>
+
+{{ render_pagination(editoriales, 'editoriales_list') }}
 {% endblock %}
