@@ -4,14 +4,14 @@
 {% block content %}
 <div class="page-header">
     <h2>Editoriales</h2>
-    <a href="{{ url_for('editoriales_new') }}" class="btn btn-primary">➕ Nueva Editorial</a>
+    <a href="{{ url_for('editoriales_new') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nueva Editorial</a>
 </div>
 
 <form method="GET" action="{{ url_for('editoriales_list') }}" class="search-form">
     <input type="search" name="q" placeholder="Buscar editoriales por nombre o país..." value="{{ q }}" class="search-input">
-    <button type="submit" class="btn btn-primary">Buscar</button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
     {% if q %}
-        <a href="{{ url_for('editoriales_list') }}" class="btn btn-secondary">Limpiar</a>
+        <a href="{{ url_for('editoriales_list') }}" class="btn btn-secondary"><i class="bi bi-eraser"></i> Limpiar</a>
     {% endif %}
 </form>
 
@@ -48,8 +48,8 @@
             <td>{{ editorial.pais }}</td>
             <td>{{ editorial.libros|length }}</td>
             <td class="actions">
-                <a href="{{ url_for('editoriales_edit', id=editorial.id) }}" class="btn btn-sm btn-edit">Editar</a>
-                <a href="{{ url_for('editoriales_delete', id=editorial.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar editorial?')">Eliminar</a>
+                <a href="{{ url_for('editoriales_edit', id=editorial.id) }}" class="btn btn-sm btn-edit"><i class="bi bi-pencil"></i> Editar</a>
+                <a href="{{ url_for('editoriales_delete', id=editorial.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar editorial?')"><i class="bi bi-trash"></i> Eliminar</a>
             </td>
         </tr>
         {% else %}

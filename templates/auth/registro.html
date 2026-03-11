@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form auth-form">
+        <h2>Registro de Usuario</h2>
+        <form method="POST" action="{{ url_for('registro') }}">
+            
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-person-check"></i> Crear Cuenta</button>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver al Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -4,14 +4,14 @@
 {% block content %}
 <div class="page-header">
     <h2>Autores</h2>
-    <a href="{{ url_for('autores_new') }}" class="btn btn-primary">➕ Nuevo Autor</a>
+    <a href="{{ url_for('autores_new') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nuevo Autor</a>
 </div>
 
 <form method="GET" action="{{ url_for('autores_list') }}" class="search-form">
     <input type="search" name="q" placeholder="Buscar autores por nombre o biografía..." value="{{ q }}" class="search-input">
-    <button type="submit" class="btn btn-primary">Buscar</button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
     {% if q %}
-        <a href="{{ url_for('autores_list') }}" class="btn btn-secondary">Limpiar</a>
+        <a href="{{ url_for('autores_list') }}" class="btn btn-secondary"><i class="bi bi-eraser"></i> Limpiar</a>
     {% endif %}
 </form>
 
@@ -48,8 +48,8 @@
             <td>{{ autor.biografia[:50] }}{{ '...' if autor.biografia and autor.biografia|length > 50 else '' }}</td>
             <td>{{ autor.libros|length }}</td>
             <td class="actions">
-                <a href="{{ url_for('autores_edit', id=autor.id) }}" class="btn btn-sm btn-edit">Editar</a>
-                <a href="{{ url_for('autores_delete', id=autor.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar autor?')">Eliminar</a>
+                <a href="{{ url_for('autores_edit', id=autor.id) }}" class="btn btn-sm btn-edit"><i class="bi bi-pencil"></i> Editar</a>
+                <a href="{{ url_for('autores_delete', id=autor.id) }}" class="btn btn-sm btn-delete" onclick="return confirm('¿Eliminar autor?')"><i class="bi bi-trash"></i> Eliminar</a>
             </td>
         </tr>
         {% else %}
